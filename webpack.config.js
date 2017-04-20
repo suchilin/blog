@@ -1,7 +1,6 @@
 const path = require('path');
 const glob = require('glob')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-//var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: './public/index.html',
@@ -13,8 +12,9 @@ module.exports = {
   entry: './src/index.js',
   devtool: 'source-map',
   output: {
-    path: path.resolve('build'),
-    filename: 'index_bundle.js'
+    path: path.resolve(__dirname, 'build'),
+      filename: 'index_bundle.js',
+      publicPath: '/'
   },
   module: {
     loaders: [
@@ -40,10 +40,6 @@ module.exports = {
                     includePaths: ['node_modules']
                 }
             }]
-          //loader: ExtractTextPlugin.extract({
-            //fallbackLoader: "style-loader",
-            //loader: "css-loader!sass-loader",
-        //}),
       }
     ]
   },

@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom';
 import ListAllPosts from './posts/list'
+import CreateOnePost from './posts/create'
+import ReadOnePost from './posts/read'
+import UpdateOnePost from './posts/update'
+import DeleteOnePost from './posts/delete'
+import Login from './login'
 var auth = require('./auth')
 
 class Home extends Component{
@@ -64,7 +69,13 @@ class MainLayout extends Component{
                 <NavBar />
                 <main>
                     <Route exact path="/" component={Home} />
-                    <Route path="/admin/posts" component={ListAllPosts} />
+                    <Route exact path="/admin/posts" component={ListAllPosts} />
+                    <Route exact path="/admin/posts/create" component={CreateOnePost} />
+                    <Route path="/admin/posts/read/:slug" component={ReadOnePost} />
+                    <Route path="/admin/posts/update/:slug" component={UpdateOnePost} />
+                    <Router path="/login" render={props=>(
+                        auth.loggedIn()?<Redirect to="/admin/posts/" />:<Login />
+                        )} />
                 </main>
                 <Footer />
             </div>

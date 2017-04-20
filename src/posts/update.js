@@ -53,7 +53,7 @@ class UpdatePost extends Component{
 class UpdateOnePost extends Component{
     render(){
             return(
-                <UpdatePost store={PostStore} params={this.props.params} />
+                <UpdatePost store={PostStore} params={this.props.match.params} />
             )
     }
 }

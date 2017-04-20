@@ -5,7 +5,7 @@ import PostStore from '../stores/post'
 @observer
 class ReadPost extends Component{
     componentDidMount(){
-        console.log(this.props)
+        //console.log(this.props)
         var slug = this.props.params.slug
         this.props.store.get(slug)
     }
@@ -26,8 +26,9 @@ class ReadPost extends Component{
 
 class ReadOnePost extends Component{
     render(){
+        console.log(this.props.match.params);
             return(
-                <ReadPost store={PostStore} params={this.props.params} />
+                <ReadPost store={PostStore} params={this.props.match.params} />
             )
     }
 }
