@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router,
+    Route,
+    Link,
+    Redirect
+} from 'react-router-dom';
 import ListAllPosts from './posts/list'
 import CreateOnePost from './posts/create'
 import ReadOnePost from './posts/read'
@@ -27,18 +31,16 @@ class Footer extends Component{
 }
 
 class Logout extends Component{
-   constructor(props) {
-      super(props);
-       this.logout = this.logout.bind(this);
-    };
-    logout(e){
-        e.preventDefault();
-        auth.logout();
-        console.log('loged out');
-        browserHistory.push('/login/');
+    componentDidMount(){
+        auth.logout()
     }
     render(){
-        return(<a href="#" onClick={this.logout}>Log Out</a>)
+        return(
+                <Redirect to={{
+                    pathname: '/login',
+                    state: { from: this.props.location }
+                  }}/>
+        )
     }
 }
 
@@ -51,7 +53,7 @@ class NavBar extends Component{
                 <ul>
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/admin/posts">Posts</Link></li>
-                    <li>{auth.loggedIn() ? <Logout />:<Link to="/login/">Sign In</Link>}</li>
+                    <li>{auth.loggedIn() ? <Link to="/logout">Logout</Link>:<Link to="/login/">Sign In</Link>}</li>
                 </ul>
             </nav>
         </aside>
@@ -69,13 +71,12 @@ class MainLayout extends Component{
                 <NavBar />
                 <main>
                     <Route exact path="/" component={Home} />
-                    <Route exact path="/admin/posts" component={ListAllPosts} />
-                    <Route exact path="/admin/posts/create" component={CreateOnePost} />
-                    <Route path="/admin/posts/read/:slug" component={ReadOnePost} />
-                    <Route path="/admin/posts/update/:slug" component={UpdateOnePost} />
-                    <Router path="/login" render={props=>(
-                        auth.loggedIn()?<Redirect to="/admin/posts/" />:<Login />
-                        )} />
+                    <PrivateRoute exact path="/admin/posts" component={ListAllPosts}/>
+                    <PrivateRoute exact path="/admin/posts/create" component={CreateOnePost} />
+                    <PrivateRoute path="/admin/posts/read/:slug" component={ReadOnePost} />
+                    <PrivateRoute path="/admin/posts/update/:slug" component={UpdateOnePost} />
+                    <Route exact path="/login" component={Login} />
+                    <Route exact path="/logout" component={Logout} />
                 </main>
                 <Footer />
             </div>
@@ -83,5 +84,18 @@ class MainLayout extends Component{
     );
   }
 };
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={props => (
+    auth.loggedIn() ? (
+      <Component {...props}/>
+    ) : (
+      <Redirect to={{
+        pathname: '/login',
+        state: { from: props.location }
+      }}/>
+    )
+  )}/>
+)
 
 export default MainLayout;

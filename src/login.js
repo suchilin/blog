@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import { browserHistory } from 'react-router'
-import { Form } from 'formsy-react'
-import MyInput from './Components'
 var auth = require('./auth')
 
 class Login extends Component{
@@ -9,21 +6,34 @@ class Login extends Component{
         super(props);
         this.state={
             canSubmit:false,
-            errors:''
+            errors:'',
+            username:'',
+            password:''
         }
     }
 
-    handleSubmit(data) {
-        var lgn = auth.login(data['username'],data['password'])
+    handleSubmit(event) {
+        var lgn = auth.login(this.state.username,this.state.password)
         console.log(lgn)
         if(lgn===200){
-            browserHistory.push('/admin/posts/')
+            this.props.history.push('/admin/posts/')
         }else if(lgn===400){
             this.setState({
                 errors:"Su usuario o contraseña no son correctos, porfavor verifiquelos"
             })
         }
+        event.preventDefault();
     }
+
+    handleChange(event) {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+
+        this.setState({
+          [name]: value
+        });
+      }
 
     enableButton() {
         this.setState({
@@ -40,11 +50,19 @@ class Login extends Component{
     render() {
             return (
                 <div>
-                    <Form onSubmit={this.handleSubmit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)} className="login">
-                        <MyInput value="" name="username" title="Username" type="text" required />
-                        <MyInput value="" name="password" title="Password" type="password" required />
-                        <button type="submit" disabled={!this.state.canSubmit}>Submit</button>
-                    </Form>
+                    <form onSubmit={this.handleSubmit.bind(this)}>
+                        <label>
+                            UserName:
+                            <input type="text" name="username" value={this.state.username} onChange={this.handleChange.bind(this)}/>
+                        </label>
+                        <br />
+                        <label>
+                            Password:
+                            <input type="password" name="password" value={this.state.password} onChange={this.handleChange.bind(this)} />
+                        </label>
+                        <br />
+                        <input type="submit" value="Login"/>
+                    </form>
                 <span>{this.state.errors}</span>
                 </div>
             )
