@@ -4,12 +4,13 @@ import { BrowserRouter as Router,
     Link,
     Redirect
 } from 'react-router-dom';
-import ListAllPosts from './posts/list'
-import CreateOnePost from './posts/create'
-import ReadOnePost from './posts/read'
-import UpdateOnePost from './posts/update'
-import DeleteOnePost from './posts/delete'
-import Login from './login'
+import ListAllPosts from './posts/list';
+import CreateOnePost from './posts/create';
+import ReadOnePost from './posts/read';
+import UpdateOnePost from './posts/update';
+import DeleteOnePost from './posts/delete';
+import Login from './login';
+import { Grid, Cell, Drawer, DrawerSpacer, Navigation, Icon } from 'react-mdc-web';
 var auth = require('./auth')
 
 class Home extends Component{
@@ -47,17 +48,16 @@ class Logout extends Component{
 class NavBar extends Component{
   render() {
     return (
-      <div className="search">
-        <aside>
-            <nav>
-                <ul>
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/admin/posts">Posts</Link></li>
-                    <li>{auth.loggedIn() ? <Link to="/logout">Logout</Link>:<Link to="/login/">Sign In</Link>}</li>
-                </ul>
-            </nav>
-        </aside>
-      </div>
+        <Drawer permanent>
+            <DrawerSpacer>
+                Awesome Blog
+            </DrawerSpacer>
+            <Navigation>
+                <Link to='/'><Icon name='home'/>Home</Link>
+                <Link to='/admin/posts'><Icon name='note-text'/>Posts</Link>
+                {auth.loggedIn() ? <Link to="/logout"><Icon name="exit_to_app" />Logout</Link>:<Link to="/login/">Sign In</Link>}
+            </Navigation>
+        </Drawer>
     );
   }
 };
@@ -66,9 +66,11 @@ class MainLayout extends Component{
   render() {
     return (
         <Router>
-            <div className="app">
+            <Grid>
+                <Cell col={2}>
+                    <NavBar />
+                </Cell>
                 <Header />
-                <NavBar />
                 <main>
                     <Route exact path="/" component={Home} />
                     <PrivateRoute exact path="/admin/posts" component={ListAllPosts}/>
@@ -79,7 +81,7 @@ class MainLayout extends Component{
                     <Route exact path="/logout" component={Logout} />
                 </main>
                 <Footer />
-            </div>
+            </Grid>
         </Router>
     );
   }
