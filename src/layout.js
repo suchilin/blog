@@ -11,6 +11,7 @@ import UpdateOnePost from './posts/update';
 import DeleteOnePost from './posts/delete';
 import Login from './login';
 import { Grid, Cell, Drawer, DrawerSpacer, Navigation, Icon } from 'react-mdc-web';
+import "./index.scss";
 var auth = require('./auth')
 
 class Home extends Component{
@@ -48,14 +49,14 @@ class Logout extends Component{
 class NavBar extends Component{
   render() {
     return (
-        <Drawer permanent>
+        <Drawer className="test" permanent>
             <DrawerSpacer>
                 Awesome Blog
             </DrawerSpacer>
             <Navigation>
-                <Link to='/'><Icon name='home'/>Home</Link>
-                <Link to='/admin/posts'><Icon name='note-text'/>Posts</Link>
-                {auth.loggedIn() ? <Link to="/logout"><Icon name="exit_to_app" />Logout</Link>:<Link to="/login/">Sign In</Link>}
+                <Link to='/'><i className='mdi mdi-home'/>Home</Link>
+                <Link to='/admin/posts'><i className="mdi mdi-book"></i>Posts</Link>
+                {auth.loggedIn() ? <Link to="/logout"><i className="mdi mdi-logout" />Logout</Link>:<Link to="/login/"><i className="mdi mdi-login" />Sign In</Link>}
             </Navigation>
         </Drawer>
     );
@@ -66,21 +67,23 @@ class MainLayout extends Component{
   render() {
     return (
         <Router>
-            <Grid>
+            <Grid className="grid_margins">
                 <Cell col={2}>
                     <NavBar />
                 </Cell>
-                <Header />
-                <main>
-                    <Route exact path="/" component={Home} />
-                    <PrivateRoute exact path="/admin/posts" component={ListAllPosts}/>
-                    <PrivateRoute exact path="/admin/posts/create" component={CreateOnePost} />
-                    <PrivateRoute path="/admin/posts/read/:slug" component={ReadOnePost} />
-                    <PrivateRoute path="/admin/posts/update/:slug" component={UpdateOnePost} />
-                    <Route exact path="/login" component={Login} />
-                    <Route exact path="/logout" component={Logout} />
-                </main>
-                <Footer />
+                <Cell col={8}>
+                    <Header />
+                    <main>
+                        <Route exact path="/" component={Home} />
+                        <PrivateRoute exact path="/admin/posts" component={ListAllPosts}/>
+                        <PrivateRoute exact path="/admin/posts/create" component={CreateOnePost} />
+                        <PrivateRoute path="/admin/posts/read/:slug" component={ReadOnePost} />
+                        <PrivateRoute path="/admin/posts/update/:slug" component={UpdateOnePost} />
+                        <Route exact path="/login" component={Login} />
+                        <Route exact path="/logout" component={Logout} />
+                    </main>
+                    <Footer />
+                </Cell>
             </Grid>
         </Router>
     );

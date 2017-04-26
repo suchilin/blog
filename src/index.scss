@@ -1,0 +1,10 @@
+@import "material-components-web/material-components-web";
+
+.mdc-permanent-drawer{
+    width: 100%;
+}
+
+.grid_margins{
+    @include mdc-layout-grid(0px, 16px, 1600px);    
+}
+
