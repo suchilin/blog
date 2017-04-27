@@ -22,7 +22,11 @@ class Home extends Component{
 
 class Header extends Component{
     render(){
-        return(<header className="primary-header">This is the header</header>)
+        return(
+            <div id="mainHeader">
+                <input type="text"placeholder="&#xF349; search"/>
+            </div>
+            )
     }
 }
 
@@ -49,7 +53,7 @@ class Logout extends Component{
 class NavBar extends Component{
   render() {
     return (
-        <Drawer className="test" permanent>
+        <Drawer id="leftNav" permanent>
             <DrawerSpacer>
                 Awesome Blog
             </DrawerSpacer>
