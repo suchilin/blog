@@ -22,7 +22,6 @@ class BaseStore{
             self.objects = []
             res.results.map(function(obj_){
                 self.objects.push(obj_)
-            return true;
             })
             if(res.links.next !== null){
                 self.next=page+1
