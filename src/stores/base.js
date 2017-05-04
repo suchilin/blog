@@ -140,24 +140,21 @@ class BaseStore{
     }
 
     delete(key){
-        if(confirm("Estas seguro de eliminar este post"))
-        {
-            $.ajax({
-                type: 'delete',
-                contentType: "application/json",
-                dataType: "json",
-                crossDomain: true,
-                async:false,
-                url: 'http://localhost:8000/blog/posts/'+key+'/',
-                context: this,
+        $.ajax({
+            type: 'delete',
+            contentType: "application/json",
+            dataType: "json",
+            crossDomain: true,
+            async:false,
+            url: 'http://localhost:8000/blog/posts/'+key+'/',
+            context: this,
+        })
+            .done(function(res){
+                location.reload()
             })
-                .done(function(res){
-                    location.reload()
-                })
-                .fail(function(e){
-                    console.log(e);
-                });
-        }
+            .fail(function(e){
+                console.log(e);
+            });
 
     }
 
