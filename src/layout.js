@@ -4,6 +4,10 @@ import { BrowserRouter as Router,
     Link,
     Redirect
 } from 'react-router-dom';
+import {Grid,
+    Cell, Drawer, Navigation,
+    Toolbar, ToolbarRow, ToolbarSection, ToolbarTitle,
+    DrawerHeader, DrawerHeaderContent} from 'react-mdc-web';
 import ListAllPosts from './posts/list';
 import CreateOnePost from './posts/create';
 import ReadOnePost from './posts/read';
@@ -53,11 +57,18 @@ class Logout extends Component{
 class NavBar extends Component{
   render() {
     return (
-        <div>
-            <Link to='/'><i className='mdi mdi-home'/>Home</Link>
-            <Link to='/admin/posts'><i className="mdi mdi-book" />Posts</Link>
-            {auth.loggedIn() ? <Link to="/logout"><i className="mdi mdi-logout" />Logout</Link>:<Link to="/login/"><i className="mdi mdi-login" />Sign In</Link>}
-        </div>
+        <Drawer className="sideBar" permanent>
+            <DrawerHeader>
+                <DrawerHeaderContent>
+                    Directions
+                </DrawerHeaderContent>
+            </DrawerHeader>
+            <Navigation>
+                <Link to='/'><i className='mdi mdi-home'/>Home</Link>
+                <Link to='/admin/posts'><i className="mdi mdi-book" />Posts</Link>
+                {auth.loggedIn() ? <Link to="/logout"><i className="mdi mdi-logout" />Logout</Link>:<Link to="/login/"><i className="mdi mdi-login" />Sign In</Link>}
+            </Navigation>
+        </Drawer>
     );
   }
 };
@@ -66,20 +77,26 @@ class MainLayout extends Component{
   render() {
     return (
         <Router>
-        <div>
-            <NavBar />
-            <Header />
-            <main>
-                <Route exact path="/" component={Home} />
-                <PrivateRoute exact path="/admin/posts" component={ListAllPosts}/>
-                <PrivateRoute exact path="/admin/posts/create" component={CreateOnePost} />
-                <PrivateRoute path="/admin/posts/read/:slug" component={ReadOnePost} />
-                <PrivateRoute path="/admin/posts/update/:slug" component={UpdateOnePost} />
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/logout" component={Logout} />
-            </main>
-            <Footer />
-        </div>
+            <Grid>
+                <Cell col={2}>
+                    <NavBar />
+                </Cell>
+                <Cell col={10}>
+                    <div className="dashbar">
+                        Dashboard
+                    </div>
+                    <main>
+                        <Route exact path="/" component={Home} />
+                        <PrivateRoute exact path="/admin/posts" component={ListAllPosts}/>
+                        <PrivateRoute exact path="/admin/posts/create" component={CreateOnePost} />
+                        <PrivateRoute path="/admin/posts/read/:slug" component={ReadOnePost} />
+                        <PrivateRoute path="/admin/posts/update/:slug" component={UpdateOnePost} />
+                        <Route exact path="/login" component={Login} />
+                        <Route exact path="/logout" component={Logout} />
+                    </main>
+                    <Footer />
+                </Cell>
+            </Grid>
         </Router>
     );
   }

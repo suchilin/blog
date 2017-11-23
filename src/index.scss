@@ -1,1 +1,24 @@
+@import "material-components-web/material-components-web";
+@import "roboto-fontface/css/roboto/sass/roboto-fontface";
 @import './table';
+
+body{
+    margin: 0px;
+    padding: 0px;
+}
+
+.mdc-layout-grid{
+    --mdc-layout-grid-margin-desktop: 0px;
+}
+
+.sideBar{
+    min-height: 100vh;
+    height: 100%;
+}
+
+.dashbar{
+    padding: 20px;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(204,206,209);
+    border-bottom-width: thin;
+}
