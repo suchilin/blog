@@ -26,9 +26,8 @@ class Home extends Component{
 class Header extends Component{
     render(){
         return(
-            <div id="mainHeader">
-                <input type="text"placeholder="&#xF349; search"/>
-                <i className="mdi mdi-account" />
+            <div className="dashbar">
+                Dashboard
             </div>
             )
     }
@@ -36,7 +35,7 @@ class Header extends Component{
 
 class Footer extends Component{
     render(){
-        return(<div className="search-footer pagination"></div>)
+        return(<div className="footer">copyright</div>)
     }
 }
 
@@ -77,26 +76,32 @@ class MainLayout extends Component{
   render() {
     return (
         <Router>
-            <Grid>
-                <Cell col={2}>
-                    <NavBar />
-                </Cell>
-                <Cell col={10}>
-                    <div className="dashbar">
-                        Dashboard
-                    </div>
-                    <main>
-                        <Route exact path="/" component={Home} />
-                        <PrivateRoute exact path="/admin/posts" component={ListAllPosts}/>
-                        <PrivateRoute exact path="/admin/posts/create" component={CreateOnePost} />
-                        <PrivateRoute path="/admin/posts/read/:slug" component={ReadOnePost} />
-                        <PrivateRoute path="/admin/posts/update/:slug" component={UpdateOnePost} />
-                        <Route exact path="/login" component={Login} />
-                        <Route exact path="/logout" component={Logout} />
-                    </main>
-                    <Footer />
+            <div>
+                <Grid>
+                    <Cell col={2}>
+                        <NavBar />
+                    </Cell>
+                    <Cell col={10}>
+                        <Header />
+                        <div className="mainContent">
+                            <main>
+                                <Route exact path="/" component={Home} />
+                                <PrivateRoute exact path="/admin/posts" component={ListAllPosts}/>
+                                <PrivateRoute exact path="/admin/posts/create" component={CreateOnePost} />
+                                <PrivateRoute path="/admin/posts/read/:slug" component={ReadOnePost} />
+                                <PrivateRoute path="/admin/posts/update/:slug" component={UpdateOnePost} />
+                                <Route exact path="/login" component={Login} />
+                                <Route exact path="/logout" component={Logout} />
+                            </main>
+                        </div>
+                    </Cell>
+                </Grid>
+                <Grid>
+                    <Cell col={12}>
+                        <Footer />
                 </Cell>
             </Grid>
+            </div>
         </Router>
     );
   }

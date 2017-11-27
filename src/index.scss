@@ -1,5 +1,5 @@
 @import "material-components-web/material-components-web";
-@import "roboto-fontface/css/roboto/sass/roboto-fontface";
+//@import "roboto-fontface/css/roboto/sass/roboto-fontface";
 @import './table';
 
 body{
@@ -22,3 +22,14 @@ body{
     border-bottom-color: rgb(204,206,209);
     border-bottom-width: thin;
 }
+
+.mainContent{
+    padding: 30px;
+}
+
+.footer{
+    min-height: 150px;
+    background-color: black;
+}
+
+
